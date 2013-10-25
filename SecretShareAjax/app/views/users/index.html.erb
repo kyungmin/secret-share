@@ -4,8 +4,28 @@
 <% @users.each do |user| %>
 <li><%= user.username %>
 	<% if Friendship.can_friend?(user.id, current_user.id) %>
-		<%= button_to "Add Friend", user_friendship_url(user.id), :method => :post %>
+		<%= button_to "Add Friend", user_friendship_url(user.id),
+																:method => :post,
+																:class => :friend,
+																:data => { 'id' => user.id } %>
 	<% end %>
 	</li>
 <% end %>
 </ul>
+
+<script type="text/javascript">
+$(".friend").on("click", function (event) {
+	// alert("id: " + $(event.currentTarget).data("id"));
+	var button = $(event.currentTarget);
+	var user_id = button.data("id");
+	button.attr("disabled", "disabled");
+	button.val("Friending...");
+	$.ajax({
+		type: "post",
+		url: "/users/" + user_id + "/friendship",
+		success: function () {
+			button.remove();
+		}
+	});
+});
+</script>

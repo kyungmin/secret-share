@@ -9,6 +9,12 @@
 																:class => :friend,
 																:data => { 'id' => user.id } %>
 	<% end %>
+	<% if Friendship.can_unfriend?(user.id, current_user.id) %>
+		<%= button_to "Unfriend", user_friendship_url(user.id),
+																:method => :delete,
+																:class => :unfriend,
+																:data => { 'id' => user.id } %>
+	<% end %>
 	</li>
 <% end %>
 </ul>
@@ -22,6 +28,21 @@ $(".friend").on("click", function (event) {
 	button.val("Friending...");
 	$.ajax({
 		type: "post",
+		url: "/users/" + user_id + "/friendship",
+		success: function () {
+			button.remove();
+		}
+	});
+});
+
+$(".unfriend").on("click", function (event) {
+	// alert("id: " + $(event.currentTarget).data("id"));
+	var button = $(event.currentTarget);
+	var user_id = button.data("id");
+	button.attr("disabled", "disabled");
+	button.val("Unfriending...");
+	$.ajax({
+		type: "delete",
 		url: "/users/" + user_id + "/friendship",
 		success: function () {
 			button.remove();

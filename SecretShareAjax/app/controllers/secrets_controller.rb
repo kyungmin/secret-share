@@ -1,6 +1,7 @@
 class SecretsController < ApplicationController
   def new
     @secret = Secret.new
+    @user_id = params[:user_id]
     render :new
   end
 
@@ -9,8 +10,10 @@ class SecretsController < ApplicationController
     @secret.author_id = current_user.id
 
     if @secret.save
-      redirect_to user_url(current_user)
+      render :json => @secret
     else
+      flash[:error] = @secret.errors.full_messages
+      redirect_to user_url(params[:secret][:recipient_id])
     end
   end
 end

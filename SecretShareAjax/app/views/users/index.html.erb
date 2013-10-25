@@ -3,49 +3,56 @@
 <ul>
 <% @users.each do |user| %>
 <li><%= user.username %>
-	<% if Friendship.can_friend?(user.id, current_user.id) %>
+	<% friendship_class ||=
+	(Friendship.can_friend?(user.id, current_user.id) ? "can-friend" : nil) %>
+	<% friendship_class ||=
+	(Friendship.can_unfriend?(user.id, current_user.id) ? "can-unfriend" : nil) %>
+	<div class="friend-buttons <%= friendship_class %>">
 		<%= button_to "Add Friend", user_friendship_url(user.id),
 																:method => :post,
 																:class => :friend,
 																:data => { 'id' => user.id } %>
-	<% end %>
-	<% if Friendship.can_unfriend?(user.id, current_user.id) %>
+
 		<%= button_to "Unfriend", user_friendship_url(user.id),
 																:method => :delete,
 																:class => :unfriend,
 																:data => { 'id' => user.id } %>
-	<% end %>
+    </div>
 	</li>
 <% end %>
 </ul>
 
 <script type="text/javascript">
 $(".friend").on("click", function (event) {
-	// alert("id: " + $(event.currentTarget).data("id"));
 	var button = $(event.currentTarget);
 	var user_id = button.data("id");
-	button.attr("disabled", "disabled");
+	button.attr("disabled", "true");
 	button.val("Friending...");
 	$.ajax({
 		type: "post",
 		url: "/users/" + user_id + "/friendship",
 		success: function () {
-			button.remove();
+			$(button.closest(".friend-buttons")).toggleClass("can-friend");
+			$(button.closest(".friend-buttons")).toggleClass("can-unfriend");
+			button.removeAttr("disabled");
+			button.val("Friend");
 		}
 	});
 });
 
 $(".unfriend").on("click", function (event) {
-	// alert("id: " + $(event.currentTarget).data("id"));
 	var button = $(event.currentTarget);
 	var user_id = button.data("id");
-	button.attr("disabled", "disabled");
+	button.attr("disabled", "true");
 	button.val("Unfriending...");
 	$.ajax({
 		type: "delete",
 		url: "/users/" + user_id + "/friendship",
 		success: function () {
-			button.remove();
+			$(button.closest(".friend-buttons")).toggleClass("can-friend");
+			$(button.closest(".friend-buttons")).toggleClass("can-unfriend");
+			button.removeAttr("disabled");
+			button.val("Unfriend");
 		}
 	});
 });

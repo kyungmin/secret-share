@@ -11,3 +11,16 @@
  *= require_self
  *= require_tree .
  */
+
+div.friend-buttons input {
+	display: none;
+}
+
+div.friend-buttons.can-unfriend input.unfriend {
+	display: inline-block;
+}
+
+div.friend-buttons.can-friend input.friend {
+	display: inline-block;
+}
+

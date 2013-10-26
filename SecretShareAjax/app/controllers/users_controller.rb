@@ -31,4 +31,8 @@ class UsersController < ApplicationController
       redirect_to user_url(current_user)
     end
   end
+
+  def error
+    render :json => { error_message: 'hello' }, :status => 422
+  end
 end

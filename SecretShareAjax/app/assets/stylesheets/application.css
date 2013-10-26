@@ -11,9 +11,144 @@
  *= require_self
  *= require_tree .
  */
+body, html {
+	height: 100%;
+}
+body {
+	font-family: Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
 
+#header {
+	margin: 0px;
+	padding: 10px;
+	height: 40px;
+	background-color: #3D6A7D;
+}
+
+#header h1 {
+	margin: 0;
+	padding-left: 10px;
+}
+#header #title {
+	color: #fff;
+	display: inline;
+	float: left;
+}
+
+#header #user-info {
+	float: right;
+	color: white;
+	padding-top: 10px;
+}
+
+#header ul li {
+	display: inline;
+}
+
+#sidebar {
+	float: left;
+	background-color: #D3CEC3;
+	width: 180px;
+	height: 100%;
+}
+
+#sidebar ul {
+	padding: 0px;
+}
+
+#sidebar li {
+	padding: 0 20px;
+}
+
+#sidebar ul a {
+	text-decoration: none;
+	display: inline-block;
+	padding: 10px 0;
+	color: #555;
+}
+
+#sidebar ul li:hover {
+	background-color: #E3DED3;
+}
+
+
+#main {
+	float: left;
+	padding-left: 20px;
+	width:80%;
+}
+
+#secrets {
+	float: left;
+}
+
+#secret-form-box {
+	float:left;
+	margin-left:20px;
+	padding: 20px;
+	border:1px solid #ddd;
+	background-color: #eee;
+	border-radius:10px;
+}
+
+input[type=submit] {
+	padding:5px;
+	background-color:#2D5A6D;
+	color:white;
+	border:1px solid black;
+	font-size:14px;
+	border-radius:4px;
+}
+
+input[type=text] {
+	border:1px solid #ccc;
+	height:25px;
+	font-size:14px;
+	padding-left:5px;
+}
+
+label {
+	width: 100px;
+	display: inline-block;
+	vertical-align:top;
+}
+
+select, #secret-tag-select {
+	display: inline-block;
+}
+
+ul {
+	list-style-type: none;
+}
 div.friend-buttons input {
 	display: none;
+}
+
+h3 {
+	display: inline-block;
+	margin: 10px 0;
+}
+
+.author {
+	font-style: italic;
+	padding-left:10px;
+}
+
+.tag {
+	border: 1px solid #BD0000;
+	padding: 3px;
+	background-color: #FFC7C7;
+	border-radius:3px;
+	font-size:12px;
+}
+
+.secret {
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 20px;
+	width: 500px;
 }
 
 div.friend-buttons.can-unfriend input.unfriend {
@@ -24,3 +159,6 @@ div.friend-buttons.can-friend input.friend {
 	display: inline-block;
 }
 
+.button_to, .friend-buttons {
+	display: inline-block;
+}

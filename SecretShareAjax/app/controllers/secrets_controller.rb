@@ -12,8 +12,9 @@ class SecretsController < ApplicationController
     if @secret.save
       render :json => @secret
     else
-      flash[:error] = @secret.errors.full_messages
-      redirect_to user_url(params[:secret][:recipient_id])
+      # flash[:error] = @secret.errors.full_messages
+      # redirect_to user_url(params[:secret][:recipient_id])
+      render :text => @secret.errors.full_messages.join(" "), :status => 422
     end
   end
 end

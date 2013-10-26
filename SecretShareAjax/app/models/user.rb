@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   )
 
   has_many :friendships, :class_name => "Friendship", :foreign_key => :in_friend_id
-  has_many :friends, through: :friendships, source: :in_friend_id
+  has_many :friends, through: :friendships, source: :in_friend
 
   validates :password_digest, :presence => { :message => "Password can't be blank" }
   validates :password, :length => { :minimum => 6, :allow_nil => true }
@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
   validates :username, :presence => true
 
   after_initialize :ensure_session_token
+
+  def secrets_sent(recipient)
+    Secret.where(:author_id => self.id, :recipient_id => recipient.id)
+  end
 
   def self.find_by_credentials(username, password)
     user = User.find_by_username(username)
